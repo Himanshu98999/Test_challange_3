@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+id=$RANDOM
+dummy_object=$(cat <<EOF
+{
+    "status": "success",
+    "message": "Employee list",
+    "start": 0,
+    "total_results": 1,
+    "data": [
+        {
+            "empId": "$id",
+            "name": "Tim",
+            "designation": "Engineer"
+        }
+    ]
+}
+EOF
+)
+
+echo "list nested object keys"
+
+echo $dummy_object | jq -r '[paths | join(".")]'
+
+read -p "Enter Enter the key in following format data[0].empId : " key
+
+echo $dummy_object | jq -r .$key
